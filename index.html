@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameDB - O IMDb dos Jogos</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Nosso CSS customizado -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="min-h-screen">
+
+    <!-- Cabeçalho Principal -->
+    <header class="bg-gray-800 shadow-lg sticky top-0 z-10">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#" onclick="showPage('page-home')" class="text-2xl font-bold text-white">GameDB</a>
+                </div>
+                <div class="flex-1 max-w-lg ml-6">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="icon-search text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <input id="searchInput" onkeyup="filterGames()"
+                            class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:bg-white focus:text-gray-900 sm:text-sm transition"
+                            placeholder="Buscar jogos..." type="search">
+                    </div>
+                </div>
+                <div class="hidden md:block ml-4">
+                    <div class="flex items-center space-x-4">
+                        <a href="#" onclick="showPage('page-home')" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Início</a>
+                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Gêneros</a>
+                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tendências</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- PÁGINA INICIAL (LISTA DE JOGOS) -->
+        <div id="page-home" class="page active">
+            <h1 class="text-3xl font-bold mb-6">Jogos em Destaque</h1>
+            <div id="game-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Os cards dos jogos serão inseridos aqui pelo JavaScript -->
+            </div>
+        </div>
+
+        <!-- PÁGINA DE DETALHES DO JOGO -->
+        <div id="page-detail" class="page">
+            <button onclick="showPage('page-home')" class="flex items-center space-x-2 text-blue-400 hover:text-blue-300 mb-6 transition">
+                <svg class="icon-arrow-left" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Voltar</span>
+            </button>
+
+            <!-- Cabeçalho do Jogo -->
+            <div class="flex flex-col md:flex-row gap-6 md:gap-8 mb-8">
+                <img id="game-detail-image" src="" alt="Capa do Jogo" class="w-full md:w-1/3 lg:w-1/4 h-auto object-cover rounded-lg shadow-lg">
+                <div class="flex-1">
+                    <h1 id="game-detail-title" class="text-4xl font-bold mb-2"></h1>
+                    <p id="game-detail-dev" class="text-lg text-gray-400 mb-4"></p>
+                    
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center space-x-1 text-yellow-400">
+                            <!-- Estrelas de avaliação -->
+                            <svg class="icon-star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 7.09l6.572-.955L10 0l2.939 6.135 6.572.955-4.756 4.455 1.123 6.545z"/></svg>
+                            <!-- ... (repetir estrelas) ... -->
+                        </div>
+                        <span id="game-detail-rating" class="text-lg font-semibold"></span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="font-semibold text-gray-400">Publicadora:</span>
+                            <p id="game-detail-publisher" class="text-gray-100"></p>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-gray-400">Lançamento:</span>
+                            <p id="game-detail-release" class="text-gray-100"></p>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-gray-400">Gênero:</span>
+                            <p id="game-detail-genre" class="text-gray-100"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sinopse -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-8">
+                <h2 class="text-2xl font-semibold mb-3">Sinopse</h2>
+                <p id="game-detail-synopsis" class="text-gray-300 leading-relaxed"></p>
+            </div>
+
+            <!-- ANÁLISE DE SUCESSO / FRACASSO (Requisito Principal) -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Análise: Por que fez Sucesso ou Fracassou?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Pontos Fortes -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-green-400 mb-3">Pontos Fortes (Sucesso)</h3>
+                        <ul id="game-detail-success" class="space-y-2">
+                            <!-- Itens de sucesso -->
+                        </ul>
+                    </div>
+                    <!-- Pontos Fracos -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-red-400 mb-3">Pontos Fracos (Fracasso)</h3>
+                        <ul id="game-detail-failure" class="space-y-2">
+                            <!-- Itens de fracasso -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POPULARIDADE (Requisito Principal) -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-semibold mb-4">Períodos em Alta (Popularidade)</h2>
+                <p class="text-gray-400 mb-4">Gráfico de jogadores simultâneos ou vendas ao longo do tempo.</p>
+                
+                <!-- Gráfico -->
+                <div class="mb-8 h-64 md:h-80">
+                    <canvas id="popularityChart"></canvas>
+                </div>
+
+                <!-- Tabela (Conforme solicitado) -->
+                <h3 class="text-xl font-semibold mb-3">Tabela de Popularidade</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-700">
+                        <thead class="bg-gray-700">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Período</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Pico de Jogadores (Estimado)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="popularity-table-body" class="bg-gray-800 divide-y divide-gray-700">
+                            <!-- Linhas da tabela serão inseridas aqui -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Nosso JavaScript -->
+    <!-- 'defer' garante que o script só execute após o HTML ser carregado -->
+    <script src="app.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #111827; /* bg-gray-900 */
+    color: #f3f4f6; /* text-gray-100 */
+}
+
+/* Estilo para esconder/mostrar páginas */
+.page {
+    display: none;
+}
+.page.active {
+    display: block;
+}
+
+/* Ícones em SVG para a UI */
+.icon-search {
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.icon-star {
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+}
+.icon-check {
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+.icon-x {
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+.icon-arrow-left {
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke: currentColor;
+    stroke-width: 2;
+}
