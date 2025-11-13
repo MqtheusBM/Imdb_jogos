@@ -27,7 +27,8 @@
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <a href="#" onclick="showPage('page-home')" class="text-2xl font-bold text-white">GameDB</a>
+                    <!-- ATUALIZADO: Chama showPageAndResetHome() para limpar filtros -->
+                    <a href="#" onclick="showPageAndResetHome()" class="text-2xl font-bold text-white">GameDB</a>
                 </div>
                 <div class="flex-1 max-w-lg ml-6">
                     <div class="relative">
@@ -39,15 +40,41 @@
                             placeholder="Buscar jogos..." type="search">
                     </div>
                 </div>
-                <div class="hidden md:block ml-4">
+                <!-- Links Desktop: Escondidos em mobile (hidden), visíveis como flex em desktop (md:flex) -->
+                <div class="hidden md:flex items-center ml-4">
                     <div class="flex items-center space-x-4">
-                        <a href="#" onclick="showPage('page-home')" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Início</a>
-                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Gêneros</a>
+                        <!-- ATUALIZADO: Chama showPageAndResetHome() para limpar filtros -->
+                        <a href="#" onclick="showPageAndResetHome()" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Início</a>
+                        <!-- ATUALIZADO: Chama showPage('page-genres') -->
+                        <a href="#" onclick="showPage('page-genres')" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Gêneros</a>
                         <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tendências</a>
                     </div>
                 </div>
+                <!-- NOVO: Botão Hambúrguer (visível apenas em mobile) -->
+                <div class="md:hidden flex items-center ml-4">
+                    <button id="mobile-menu-button" onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Abrir menu principal</span>
+                        <!-- Ícone Hambúrguer (menu fechado) -->
+                        <svg id="icon-hamburger" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Ícone X (menu aberto) -->
+                        <svg id="icon-x" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </nav>
+
+        <!-- NOVO: Menu Mobile (escondido por padrão) -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" onclick="handleMobileLinkClick(showPageAndResetHome)" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Início</a>
+                <a href="#" onclick="handleMobileLinkClick(() => showPage('page-genres'))" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Gêneros</a>
+                <a href="#" onclick="handleMobileLinkClick(() => { /* TODO: Adicionar página Tendências */ })" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Tendências</a>
+            </div>
+        </div>
     </header>
 
     <!-- Conteúdo Principal -->
@@ -55,7 +82,8 @@
 
         <!-- PÁGINA INICIAL (LISTA DE JOGOS) -->
         <div id="page-home" class="page active">
-            <h1 class="text-3xl font-bold mb-6">Jogos em Destaque</h1>
+            <!-- ATUALIZADO: Adicionado ID ao H1 para podermos alterá-lo -->
+            <h1 id="home-title" class="text-3xl font-bold mb-6">Jogos em Destaque</h1>
             <div id="game-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <!-- Os cards dos jogos serão inseridos aqui pelo JavaScript -->
             </div>
@@ -67,6 +95,7 @@
                 <svg class="icon-arrow-left" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                 </svg>
+                <!-- O botão 'Voltar' agora leva à home (que pode estar filtrada ou não, o que é o ideal) -->
                 <span>Voltar</span>
             </button>
 
@@ -158,11 +187,22 @@
             </div>
 
         </div>
+
+        <!-- NOVO: PÁGINA DE GÊNEROS -->
+        <div id="page-genres" class="page">
+            <h1 class="text-3xl font-bold mb-6">Explorar por Gênero</h1>
+            <div id="genre-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Os cards de gênero serão inseridos aqui pelo JavaScript -->
+            </div>
+        </div>
+
     </main>
 
     <!-- Nosso JavaScript -->
     <!-- 'defer' garante que o script só execute após o HTML ser carregado -->
     <script src="app.js" defer></script>
+    <!-- NOVO: Arquivo separado para a lógica de Gêneros -->
+    <script src="genres.js" defer></script>
 
 </body>
 </html>
