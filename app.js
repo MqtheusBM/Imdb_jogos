@@ -7,7 +7,7 @@ const gameDatabase = {
         releaseDate: '26/02/2016',
         genre: 'Simulação, RPG',
         rating: '9.8',
-        imageUrl: 'https://placehold.co/600x800/2a9d8f/ffffff?text=Stardew+Valley',
+        imageUrl: 'https://tm.ibxk.com.br/2024/11/04/04201322266001.jpg',
         synopsis: 'Você herdou a antiga fazenda do seu avô em Stardew Valley. Armado com ferramentas de segunda mão e algumas moedas, você parte para começar sua nova vida. Você consegue aprender a viver da terra e transformar esses campos cobertos de mato em um lar próspero?',
         success: [
             'Gameplay relaxante e viciante com centenas de horas.',
@@ -57,7 +57,7 @@ const gameDatabase = {
         releaseDate: '04/09/2020',
         genre: 'Ação, Loot',
         rating: '6.1',
-        imageUrl: 'https://placehold.co/600x800/e76f51/ffffff?text=Marvel\'s+Avengers',
+        imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcOnevk3Z1mhWKMQBbCCsW1DJ_PNWthemxHA&s',
         synopsis: 'Marvel\'s Avengers é um jogo épico de ação e aventura em terceira pessoa que combina uma história cinematográfica original com jogabilidade individual e cooperativa.',
         success: [
             'Campanha single-player inicial foi bem recebida.',
@@ -83,7 +83,7 @@ const gameDatabase = {
         releaseDate: '02/03/2016',
         genre: 'Estratégia em Tempo Real, Tower Defense',
         rating: '9.2',
-        imageUrl: 'https://placehold.co/600x800/277be8/ffffff?text=Clash+Royale',
+        imageUrl: 'https://supercell.com/images/53c91cc7ddf17d5b6fa13cae4762af1b/main_logo_clashroyale.5e3fbb70__1_.webp',
         synopsis: 'Clash Royale é um jogo multijogador em tempo real estrelado pelos Royales, seus personagens favoritos do Clash e muito mais. Colete e atualize dezenas de cartas com as tropas, feitiços e defesas que você conhece e ama, além dos Royales: Príncipes, Cavaleiros, Bebês Dragões e muito mais.',
         success: [
             'Gameplay viciante com partidas rápidas de 3 minutos.',
@@ -110,7 +110,7 @@ const gameDatabase = {
         releaseDate: '03/03/2017',
         genre: 'Aventura, RPG de Ação',
         rating: '9.7',
-        imageUrl: 'https://placehold.co/600x800/e69f00/ffffff?text=Breath+of+the+Wild',
+        imageUrl: 'https://tm.ibxk.com.br/2022/04/27/27145504808328.jpg?ims=1600x900/filters:format(jpg)',
         synopsis: 'Esqueça tudo o que sabe sobre os jogos The Legend of Zelda. Entre em um mundo de descoberta, exploração e aventura em The Legend of Zelda: Breath of the Wild, um novo jogo que quebra barreiras na aclamada série.',
         success: [
             'Mundo aberto massivo e que recompensa a exploração.',
@@ -135,7 +135,7 @@ const gameDatabase = {
         releaseDate: '02/06/2023',
         genre: 'Luta',
         rating: '9.2',
-        imageUrl: 'https://placehold.co/600x800/1d3557/ffffff?text=Street+Fighter+6',
+        imageUrl: 'https://salaodejogos.net/wp-content/uploads/2023/06/SF6-Official-Key-Art.jpg',
         synopsis: 'Street Fighter 6 é a mais nova entrada na icônica série de jogos de luta, trazendo gráficos impressionantes, novos modos de jogo inovadores e mecânicas de combate modernizadas para veteranos e novatos.',
         success: [
             'Gráficos estilizados e modernos.',
@@ -160,7 +160,7 @@ const gameDatabase = {
         releaseDate: '24/03/2023',
         genre: 'Terror, Ação', // Gênero simplificado para o filtro
         rating: '9.8',
-        imageUrl: 'https://placehold.co/600x800/495057/ffffff?text=RE4+Remake',
+        imageUrl: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2050650/capsule_616x353.jpg?t=1736385712',
         synopsis: 'Seis anos se passaram desde o desastre biológico em Raccoon City. Leon S. Kennedy, um dos sobreviventes, foi recrutado como agente subordinado ao presidente. Com a experiência de múltiplas missões, Leon é enviado para resgatar a filha sequestrada do presidente dos Estados Unidos.',
         success: [
             'Remake fiel que moderniza um clássico sem perder a essência.',
