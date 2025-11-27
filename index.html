@@ -27,7 +27,6 @@
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <!-- ATUALIZADO: Chama showPageAndResetHome() para limpar filtros -->
                     <a href="#" onclick="showPageAndResetHome()" class="text-2xl font-bold text-white">GameDB</a>
                 </div>
                 <div class="flex-1 max-w-lg ml-6">
@@ -40,25 +39,20 @@
                             placeholder="Buscar jogos..." type="search">
                     </div>
                 </div>
-                <!-- Links Desktop: Escondidos em mobile (hidden), visíveis como flex em desktop (md:flex) -->
+                <!-- Links Desktop -->
                 <div class="hidden md:flex items-center ml-4">
                     <div class="flex items-center space-x-4">
-                        <!-- ATUALIZADO: Chama showPageAndResetHome() para limpar filtros -->
                         <a href="#" onclick="showPageAndResetHome()" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Início</a>
-                        <!-- ATUALIZADO: Chama showPage('page-genres') -->
                         <a href="#" onclick="showPage('page-genres')" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Gêneros</a>
-                       <!-- <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tendências</a> -->
                     </div>
                 </div>
-                <!-- NOVO: Botão Hambúrguer (visível apenas em mobile) -->
+                <!-- Botão Hambúrguer (Mobile) -->
                 <div class="md:hidden flex items-center ml-4">
                     <button id="mobile-menu-button" onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                         <span class="sr-only">Abrir menu principal</span>
-                        <!-- Ícone Hambúrguer (menu fechado) -->
                         <svg id="icon-hamburger" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
-                        <!-- Ícone X (menu aberto) -->
                         <svg id="icon-x" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -67,12 +61,11 @@
             </div>
         </nav>
 
-        <!-- NOVO: Menu Mobile (escondido por padrão) -->
+        <!-- Menu Mobile -->
         <div id="mobile-menu" class="hidden md:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#" onclick="handleMobileLinkClick(showPageAndResetHome)" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Início</a>
                 <a href="#" onclick="handleMobileLinkClick(() => showPage('page-genres'))" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Gêneros</a>
-                <a href="#" onclick="handleMobileLinkClick(() => { /* TODO: Adicionar página Tendências */ })" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Tendências</a>
             </div>
         </div>
     </header>
@@ -82,10 +75,9 @@
 
         <!-- PÁGINA INICIAL (LISTA DE JOGOS) -->
         <div id="page-home" class="page active">
-            <!-- ATUALIZADO: Adicionado ID ao H1 para podermos alterá-lo -->
             <h1 id="home-title" class="text-3xl font-bold mb-6">Jogos em Destaque</h1>
             <div id="game-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Os cards dos jogos serão inseridos aqui pelo JavaScript -->
+                <!-- Cards inseridos via JS -->
             </div>
         </div>
 
@@ -95,7 +87,6 @@
                 <svg class="icon-arrow-left" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                 </svg>
-                <!-- O botão 'Voltar' agora leva à home (que pode estar filtrada ou não, o que é o ideal) -->
                 <span>Voltar</span>
             </button>
 
@@ -108,9 +99,7 @@
                     
                     <div class="flex items-center space-x-4 mb-4">
                         <div class="flex items-center space-x-1 text-yellow-400">
-                            <!-- Estrelas de avaliação -->
                             <svg class="icon-star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 7.09l6.572-.955L10 0l2.939 6.135 6.572.955-4.756 4.455 1.123 6.545z"/></svg>
-                            <!-- ... (repetir estrelas) ... -->
                         </div>
                         <span id="game-detail-rating" class="text-lg font-semibold"></span>
                     </div>
@@ -138,38 +127,30 @@
                 <p id="game-detail-synopsis" class="text-gray-300 leading-relaxed"></p>
             </div>
 
-            <!-- ANÁLISE DE SUCESSO / FRACASSO (Requisito Principal) -->
+            <!-- Análise -->
             <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-8">
                 <h2 class="text-2xl font-semibold mb-4">Análise: Por que fez Sucesso ou Fracassou?</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Pontos Fortes -->
                     <div>
                         <h3 class="text-xl font-semibold text-green-400 mb-3">Pontos Fortes (Sucesso)</h3>
-                        <ul id="game-detail-success" class="space-y-2">
-                            <!-- Itens de sucesso -->
-                        </ul>
+                        <ul id="game-detail-success" class="space-y-2"></ul>
                     </div>
-                    <!-- Pontos Fracos -->
                     <div>
                         <h3 class="text-xl font-semibold text-red-400 mb-3">Pontos Fracos (Fracasso)</h3>
-                        <ul id="game-detail-failure" class="space-y-2">
-                            <!-- Itens de fracasso -->
-                        </ul>
+                        <ul id="game-detail-failure" class="space-y-2"></ul>
                     </div>
                 </div>
             </div>
 
-            <!-- POPULARIDADE (Requisito Principal) -->
+            <!-- Popularidade -->
             <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4">Períodos em Alta (Popularidade)</h2>
                 <p class="text-gray-400 mb-4">Gráfico de jogadores simultâneos ou vendas ao longo do tempo.</p>
                 
-                <!-- Gráfico -->
                 <div class="mb-8 h-64 md:h-80">
                     <canvas id="popularityChart"></canvas>
                 </div>
 
-                <!-- Tabela (Conforme solicitado) -->
                 <h3 class="text-xl font-semibold mb-3">Tabela de Popularidade</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-700">
@@ -179,29 +160,24 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Pico de Jogadores (Estimado)</th>
                             </tr>
                         </thead>
-                        <tbody id="popularity-table-body" class="bg-gray-800 divide-y divide-gray-700">
-                            <!-- Linhas da tabela serão inseridas aqui -->
-                        </tbody>
+                        <tbody id="popularity-table-body" class="bg-gray-800 divide-y divide-gray-700"></tbody>
                     </table>
                 </div>
             </div>
-
         </div>
 
-        <!-- NOVO: PÁGINA DE GÊNEROS -->
+        <!-- PÁGINA DE GÊNEROS -->
         <div id="page-genres" class="page">
             <h1 class="text-3xl font-bold mb-6">Explorar por Gênero</h1>
             <div id="genre-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Os cards de gênero serão inseridos aqui pelo JavaScript -->
+                <!-- Cards inseridos via JS -->
             </div>
         </div>
 
     </main>
 
-    <!-- Nosso JavaScript -->
-    <!-- 'defer' garante que o script só execute após o HTML ser carregado -->
+    <!-- Scripts Externos (Ordem Importante) -->
     <script src="app.js" defer></script>
-    <!-- NOVO: Arquivo separado para a lógica de Gêneros -->
     <script src="genres.js" defer></script>
 
 </body>

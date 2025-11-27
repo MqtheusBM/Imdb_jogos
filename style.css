@@ -7,9 +7,12 @@ body {
 /* Estilo para esconder/mostrar páginas */
 .page {
     display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out; /* Suaviza a troca de página */
 }
 .page.active {
     display: block;
+    opacity: 1;
 }
 
 /* Ícones em SVG para a UI */

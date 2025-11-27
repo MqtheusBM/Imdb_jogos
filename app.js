@@ -1,5 +1,31 @@
 // --- BANCO DE DADOS MOCK (Simulado) ---
 const gameDatabase = {
+    // --- NOVO: BATTLEFIELD 6 ---
+    'battlefield-6': {
+        title: 'Battlefield™ 6',
+        developer: 'Battlefield Studios / EA',
+        publisher: 'Electronic Arts',
+        releaseDate: '10/10/2025', // Data baseada nos "vazamentos" e contexto futurista
+        genre: 'FPS, Ação',
+        rating: '9.0',
+        imageUrl: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2807960/c12d12ce3c7d217398d3fcad77427bfc9d57c570/header.jpg?t=1764108244', // Placeholder visual ou arte conceitual
+        synopsis: 'A experiência definitiva de guerra total está de volta. Battlefield 6 traz o retorno triunfante da campanha single-player, onde você se junta ao esquadrão de elite Dagger 13 contra a facção Pax Armata. No multiplayer, domine com o novo "Kinesthetic Combat System" e o modo Battle Royale gratuito "RedSec".',
+        success: [
+            'Retorno aclamado da Campanha Single-Player.',
+            'Sistema de classes clássico está de volta (fim dos Especialistas).',
+            'Modo "RedSec" (Battle Royale) gratuito atraiu milhões.',
+            'Destruição de cenário em escala nunca vista (Levolution 2.0).'
+        ],
+        failure: [
+            'Relatos de burnout e problemas culturais nos estúdios durante o desenvolvimento.',
+            'Preço da "Phantom Edition" considerado abusivo por parte da comunidade.',
+            'Bugs visuais menores no lançamento do modo RedSec.'
+        ],
+        popularity: {
+            labels: ['Out 2025 (Lanç.)', 'Nov 2025', 'Dez 2025 (Est.)'],
+            data: [2500000, 1800000, 2100000] // Números fictícios de "sucesso"
+        }
+    },
     'stardew-valley': {
         title: 'Stardew Valley',
         developer: 'ConcernedApe',
@@ -83,7 +109,7 @@ const gameDatabase = {
         releaseDate: '02/03/2016',
         genre: 'Estratégia em Tempo Real, Tower Defense',
         rating: '9.2',
-        imageUrl: 'https://supercell.com/images/53c91cc7ddf17d5b6fa13cae4762af1b/main_logo_clashroyale.5e3fbb70__1_.webp',
+        imageUrl: 'https://images2.alphacoders.com/855/thumb-1920-855974.jpg',
         synopsis: 'Clash Royale é um jogo multijogador em tempo real estrelado pelos Royales, seus personagens favoritos do Clash e muito mais. Colete e atualize dezenas de cartas com as tropas, feitiços e defesas que você conhece e ama, além dos Royales: Príncipes, Cavaleiros, Bebês Dragões e muito mais.',
         success: [
             'Gameplay viciante com partidas rápidas de 3 minutos.',
@@ -110,7 +136,7 @@ const gameDatabase = {
         releaseDate: '03/03/2017',
         genre: 'Aventura, RPG de Ação',
         rating: '9.7',
-        imageUrl: 'https://tm.ibxk.com.br/2022/04/27/27145504808328.jpg?ims=1600x900/filters:format(jpg)',
+        imageUrl: 'https://theinnergamer.net/wp-content/uploads/2017/03/breath-of-the-wild-header.jpg',
         synopsis: 'Esqueça tudo o que sabe sobre os jogos The Legend of Zelda. Entre em um mundo de descoberta, exploração e aventura em The Legend of Zelda: Breath of the Wild, um novo jogo que quebra barreiras na aclamada série.',
         success: [
             'Mundo aberto massivo e que recompensa a exploração.',
@@ -160,7 +186,7 @@ const gameDatabase = {
         releaseDate: '24/03/2023',
         genre: 'Terror, Ação', // Gênero simplificado para o filtro
         rating: '9.8',
-        imageUrl: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2050650/capsule_616x353.jpg?t=1736385712',
+        imageUrl: 'https://images.alphacoders.com/130/1308576.jpeg',
         synopsis: 'Seis anos se passaram desde o desastre biológico em Raccoon City. Leon S. Kennedy, um dos sobreviventes, foi recrutado como agente subordinado ao presidente. Com a experiência de múltiplas missões, Leon é enviado para resgatar a filha sequestrada do presidente dos Estados Unidos.',
         success: [
             'Remake fiel que moderniza um clássico sem perder a essência.',
@@ -197,14 +223,13 @@ function showPage(pageId) {
     // Rola para o topo
     window.scrollTo(0, 0);
 
-    // ATUALIZADO: Se for a página de gêneros, renderiza o conteúdo dela
-    if (pageId === 'page-genres') {
-        // Esta função agora vive em genres.js, mas é chamada daqui
+    // Se for a página de gêneros, chama a função que está em genres.js
+    if (pageId === 'page-genres' && typeof renderGenresPage === 'function') {
         renderGenresPage();
     }
 }
 
-// NOVA FUNÇÃO: Reseta a home page para a visão padrão (sem filtros)
+// Reseta a home page para a visão padrão
 function showPageAndResetHome() {
     // Reseta o título
     const homeTitle = document.getElementById('home-title');
@@ -216,8 +241,20 @@ function showPageAndResetHome() {
     if (searchInput) {
         searchInput.value = '';
     }
-    // Renderiza todos os jogos
-    renderGameList(Object.keys(gameDatabase));
+    
+    // --- CONFIGURAÇÃO DOS DESTAQUES ---
+    // Escolha aqui quais jogos (IDs) aparecem na tela inicial.
+    // Os IDs devem ser iguais às chaves do objeto 'gameDatabase' lá em cima.
+    const highlights = [
+        'street-fighter-6', 
+        'cyberpunk-2077', 
+        'clash-royale', 
+        're4-remake'
+    ];
+    
+    // Renderiza apenas os destaques escolhidos
+    renderGameList(highlights);
+    
     // Mostra a página inicial
     showPage('page-home');
 }
@@ -312,13 +349,11 @@ function showGameDetail(gameId) {
     });
 
     // Renderiza o GRÁFICO
-    // Verifica se Chart está disponível (carregado via CDN)
     if (typeof Chart !== 'undefined') {
         renderPopularityChart(game.popularity);
     } else {
         console.error('Chart.js não foi carregado.');
     }
-
 
     // Mostra a página de detalhes
     showPage('page-detail');
@@ -328,22 +363,21 @@ function showGameDetail(gameId) {
 function renderPopularityChart(popularityData) {
     const ctx = document.getElementById('popularityChart').getContext('2d');
     
-    // Destrói o gráfico anterior, se existir (importante!)
     if (popularityChartInstance) {
         popularityChartInstance.destroy();
     }
 
     popularityChartInstance = new Chart(ctx, {
-        type: 'line', // Gráfico de linha
+        type: 'line',
         data: {
             labels: popularityData.labels,
             datasets: [{
                 label: 'Pico de Jogadores (Estimado)',
                 data: popularityData.data,
-                backgroundColor: 'rgba(59, 130, 246, 0.2)', // bg-blue-500/20
-                borderColor: 'rgba(59, 130, 246, 1)', // border-blue-500
+                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                borderColor: 'rgba(59, 130, 246, 1)',
                 borderWidth: 2,
-                tension: 0.1, // Linha levemente curvada
+                tension: 0.1,
                 pointBackgroundColor: 'rgba(59, 130, 246, 1)'
             }]
         },
@@ -353,57 +387,58 @@ function renderPopularityChart(popularityData) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: {
-                        color: '#d1d5db' // text-gray-300
-                    },
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)' // grid-gray-700
-                    }
+                    ticks: { color: '#d1d5db' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
                 },
                 x: {
-                    ticks: {
-                        color: '#d1d5db' // text-gray-300
-                    },
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)' // grid-gray-700
-                    }
+                    ticks: { color: '#d1d5db' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
                 }
             },
             plugins: {
                 legend: {
-                    labels: {
-                        color: '#d1d5db' // text-gray-300
-                    }
+                    labels: { color: '#d1d5db' }
                 }
             }
         }
     });
 }
 
-// --- NOVAS FUNÇÕES DE GÊNERO ---
-// MOVEMOS AS FUNÇÕES renderGenresPage(), findGameImageByGenre(), 
-// e showGamesByGenre() PARA O ARQUIVO 'genres.js'
-// --- FUNÇÃO DE FILTRO/BUSCA ---
+// --- FUNÇÃO DE BUSCA (MODIFICADA) ---
+// Agora busca em TODO o banco de dados, não só nos elementos visíveis
 function filterGames() {
     const query = document.getElementById('searchInput').value.toLowerCase();
-    const allCards = document.querySelectorAll('#game-list .game-card');
+    
+    // Se a busca estiver vazia, restaura os 4 destaques iniciais
+    if (!query) {
+        showPageAndResetHome();
+        return;
+    }
 
-    let foundGames = false;
-    allCards.forEach(card => {
-        const title = card.getAttribute('data-title');
-        if (title.includes(query)) {
-            card.style.display = 'block';
-            foundGames = true;
-        } else {
-            card.style.display = 'none';
-        }
+    // Filtra diretamente do objeto de dados
+    const allGameIds = Object.keys(gameDatabase);
+    const filteredIds = allGameIds.filter(id => {
+        const game = gameDatabase[id];
+        return game.title.toLowerCase().includes(query);
     });
 
-    // Opcional: Mostrar mensagem se a busca não retornar nada
-    // (Isso requer uma pequena mudança no renderGameList para não limpar se for só filtro)
+    // Renderiza os resultados (pode ser mais de 4, o que é o esperado numa busca)
+    renderGameList(filteredIds);
+    
+    // Garante que a página home está visível para mostrar os resultados
+    const homePage = document.getElementById('page-home');
+    if (!homePage.classList.contains('active')) {
+        showPage('page-home');
+    }
+
+    // Opcional: Atualiza o título para dar feedback
+    const homeTitle = document.getElementById('home-title');
+    if (homeTitle) {
+        homeTitle.innerText = `Resultados para "${query}"`;
+    }
 }
 
-// --- NOVO: FUNÇÕES DO MENU MOBILE ---
+// --- FUNÇÕES DO MENU MOBILE ---
 function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     const iconHamburger = document.getElementById('icon-hamburger');
@@ -418,23 +453,15 @@ function toggleMobileMenu() {
     }
 }
 
-// Função helper para fechar o menu após clicar em um link
 function handleMobileLinkClick(navigationFunction) {
     if (typeof navigationFunction === 'function') {
-        navigationFunction(); // Executa a navegação (ex: showPage('page-genres'))
+        navigationFunction();
     }
-    // Sempre fecha o menu, mesmo se a função não for válida (ex: Tendências)
     toggleMobileMenu(); 
 }
 
 // --- INICIALIZAÇÃO ---
-// Renderiza a lista de jogos inicial quando a página carregar
-// Adiciona um listener para garantir que o DOM esteja pronto antes de rodar o script
 document.addEventListener('DOMContentLoaded', () => {
-    // Verifica se Chart está disponível (pode não ser necessário aqui, mas é boa prática)
-    if (typeof Chart === 'undefined') {
-        console.warn('Chart.js ainda não carregado. Gráficos podem não funcionar imediatamente.');
-    }
-    // Mostra a home page com todos os jogos
+    // Carrega os destaques iniciais
     showPageAndResetHome();
 });
